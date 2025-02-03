@@ -852,29 +852,29 @@ static void ResetServerSaveParams() {
 static void initServerConfig() {
     server.dbnum = REDIS_DEFAULT_DBNUM;
     server.port = REDIS_SERVERPORT;
-    server.verbosity = REDIS_DEBUG;
-    server.maxidletime = REDIS_MAXIDLETIME;
+    server.verbosity = REDIS_DEBUG; // 日志级别
+    server.maxidletime = REDIS_MAXIDLETIME; // 空闲连接的超时时间
     server.saveparams = NULL;
     server.logfile = NULL; /* NULL = log on standard output */
     server.bindaddr = NULL;
-    server.glueoutputbuf = 1;
-    server.daemonize = 0;
-    server.pidfile = "/var/run/redis.pid";
-    server.dbfilename = "dump.rdb";
-    server.requirepass = NULL;
-    server.shareobjects = 0;
-    server.maxclients = 0;
-    ResetServerSaveParams();
+    server.glueoutputbuf = 1; // 是否将输出缓冲区合并为单个I/O调用，1表示启用
+    server.daemonize = 0; // 是否以守护进程模式运行
+    server.pidfile = "/var/run/redis.pid"; // 守护进程的PID文件路径
+    server.dbfilename = "dump.rdb"; // 数据库快照的文件名
+    server.requirepass = NULL; // 初始化为NULL，表示不设置密码
+    server.shareobjects = 0; // 是否启用对象共享，默认为0，表示不启用
+    server.maxclients = 0; // 最大客户端连接数，默认为0，表示使用配置文件中定义的值
+    ResetServerSaveParams(); // 重置自动保存配置
 
     appendServerSaveParams(60*60,1);  /* save after 1 hour and 1 change */
     appendServerSaveParams(300,100);  /* save after 5 minutes and 100 changes */
     appendServerSaveParams(60,10000); /* save after 1 minute and 10000 changes */
     /* Replication related */
-    server.isslave = 0;
-    server.masterhost = NULL;
-    server.masterport = 6379;
-    server.master = NULL;
-    server.replstate = REDIS_REPL_NONE;
+    server.isslave = 0; // 是否为从服务器，默认为0，表示不是从服务器
+    server.masterhost = NULL; // 主服务器的主机名
+    server.masterport = 6379; // 主服务器的端口号
+    server.master = NULL; // 指向主服务器的指针
+    server.replstate = REDIS_REPL_NONE; // 复制状态，默认为REDIS_REPL_NONE，表示当前没有复制状态
 }
 
 static void initServer() {
